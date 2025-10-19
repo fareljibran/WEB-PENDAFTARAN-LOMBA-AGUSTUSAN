@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pendaftaran Lomba 17 Agustus</title>
+
+  <style>
+    /* === Styling Halaman Umum === */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+
+      /* Background gradasi putih ke merah */
+      background: linear-gradient(to bottom right, white, red);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* === Styling Kotak Form === */
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+
+      /* Animasi awal (fade in + naik pelan) */
+      opacity: 0;
+      transform: translateY(-30px);
+      animation: fadeInMove 1s forwards;
+    }
+
+    @keyframes fadeInMove {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === Judul === */
+    .container h2 {
+      color: red;
+      margin-bottom: 15px;
+    }
+
+    /* === Logo / gambar === */
+    .container img {
+      width: 100px;
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    /* === Form Input === */
+    .form-group {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    /* === Tombol DAFTAR === */
+    .btn-submit {
+      background: linear-gradient(to right, #ff4e50, #f76a6a);
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    /* Animasi saat hover */
+    .btn-submit:hover {
+      background: linear-gradient(to right, #f76a6a, #ff4e50);
+      transform: scale(1.05);
+    }
+
+    /* Animasi saat diklik */
+    .btn-submit:active {
+      transform: scale(0.95);
+    }
+
+    /* === Pesan Sukses === */
+    .success-message {
+      color: green;
+      font-weight: bold;
+      margin-top: 15px;
+      display: none; /* awalnya disembunyikan */
+      animation: fadeIn 0.8s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== BAGIAN KOTAK PENDAFTARAN ===== -->
+  <div class="container">
+    <h2>PENDAFTARAN LOMBA 17 AGUSTUS</h2>
+
+    <!-- Gambar Logo -->
+    <img src="indo80-removebg-preview.png" alt="Logo HUT RI">
+
+    <!-- Formulir Pendaftaran -->
+    <form id="formPendaftaran">
+
+      <!-- Nama Lengkap -->
+      <div class="form-group">
+        <label for="nama">Nama Lengkap </label>
+        <input type="text" id="nama" placeholder="Masukkan nama lengkap" required>
+      </div>
+
+      <!-- Alamat -->
+      <div class="form-group">
+        <label for="alamat">Alamat </label>
+        <input type="text" id="alamat" placeholder="Masukkan alamat lengkap" required>
+      </div>
+
+      <!-- Nomor WA -->
+      <div class="form-group">
+        <label for="wa">Nomor WA </label>
+        <input type="text" id="wa" placeholder="Contoh: 08123456789" required>
+      </div>
+
+      <!-- Pilihan Lomba -->
+      <div class="form-group">
+        <label for="lomba">Jenis Lomba</label>
+        <select id="lomba">
+          <option value="Balap Karung">Balap Karung</option>
+          <option value="Makan Kerupuk">Makan Kerupuk</option>
+          <option value="Tarik Tambang">Tarik Tambang</option>
+          <option value="Panjat Pinang">Panjat Pinang</option>
+        </select>
+      </div>
+
+      <!-- Tombol Submit -->
+      <button type="submit" class="btn-submit">DAFTAR</button>
+
+    </form>
+
+    <!-- Pesan sukses yang muncul setelah validasi dan kirim -->
+    <div id="pesanSukses" class="success-message">
+      🎉 Pendaftaran berhasil! Mengirim ke WhatsApp...
+    </div>
+  </div>
+
+  <!-- ===== SCRIPT LOGIKA FORM ===== -->
+  <script>
+    // Ambil elemen form dan pesan sukses
+    const form = document.getElementById('formPendaftaran');
+    const pesanSukses = document.getElementById('pesanSukses');
+
+    // Event saat form disubmit
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // cegah reload halaman
+
+      // Ambil nilai input dari form
+      const nama = document.getElementById('nama').value.trim();
+      const alamat = document.getElementById('alamat').value.trim();
+      const wa = document.getElementById('wa').value.trim();
+      const lomba = document.getElementById('lomba').value;
+
+      // === Validasi Nama ===
+      // Tidak boleh ada angka atau karakter aneh, hanya huruf & spasi
+      const regexNama = /^[A-Za-z\s]+$/;
+      if (!regexNama.test(nama)) {
+        alert('Nama tidak boleh mengandung angka atau karakter khusus!');
+        return;
+      }
+
+      // === Validasi WA ===
+      // Harus 10-12 digit angka, tidak boleh kosong
+      const regexWA = /^\d{10,12}$/;
+      if (!regexWA.test(wa)) {
+        alert('Nomor WA harus 10 sampai 12 digit angka tanpa spasi atau karakter lain!');
+        return;
+      }
+
+      // === Validasi Alamat ===
+      // Wajib diisi, tidak boleh kosong
+      if (alamat === '') {
+        alert('Alamat tidak boleh kosong!');
+        return;
+      }
+
+      // === Jika semua validasi sukses ===
+      
+      // Tampilkan pesan sukses (pakai animasi)
+      pesanSukses.style.display = 'block';
+
+      // Buat pesan yang akan dikirim ke WhatsApp
+      const pesan = `*PENDAFTARAN LOMBA 17 AGUSTUS*\n\n` +
+                    `Nama: ${nama}\n` +
+                    `Alamat: ${alamat}\n` +
+                    `No. WA: ${wa}\n` +
+                    `Jenis Lomba: ${lomba}\n\n` +
+                    `Saya ingin mendaftar. Terima kasih.`;
+
+      // === Kirim ke WhatsApp ===
+      // Ganti ini dengan nomor panitia yang benar
+      const noPanitia = '+6289515726625';
+
+      // Buka chat WA dalam 1.5 detik setelah pesan sukses muncul
+      setTimeout(() => {
+        window.open(`https://wa.me/${noPanitia}?text=${encodeURIComponent(pesan)}`, '_blank');
+
+        // Reset form setelah kirim WA
+        form.reset();
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
